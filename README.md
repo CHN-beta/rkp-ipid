@@ -36,4 +36,6 @@ rkp-ipid mark_capture=0x40 mark_ramdom=0x80
 
 另外，不要在 luci 中启用 flow offloading（流量分载，即 nat 加速），否则这个模块会失效。
 
+还有就是，随机 ID 很吃性能，慎用。
+
 这个模块算是我随便写的，作为 xmurp-ua 的一个衍生物。所以，文档我就不写太多了，一些通用的信息直接去看 xmurp-ua。

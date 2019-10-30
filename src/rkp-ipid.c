@@ -60,6 +60,9 @@ unsigned int hook_funcion(void *priv, struct sk_buff *skb, const struct nf_hook_
 		n_modified++;
 	}
 
+	iph->check = 0;
+	iph->check = ip_fast_csum(iph, iph->ihl);
+
 	if(n_modified_lastprint * 2 == n_modified)
 	{
 		printk("rkp-ipid: Successfully modified %u packages, in which %u IDs are in increasing order, %u IDs are random. There are %u packages not writable.\n",
