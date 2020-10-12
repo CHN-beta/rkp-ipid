@@ -22,7 +22,11 @@ module_param(mark_random, uint, 0);
 static struct nf_hook_ops nfho;
 static u_int16_t id_next;
 
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(4,2,0)
 unsigned int hook_funcion(void *priv, struct sk_buff *skb, const struct nf_hook_state *state)
+#else
+unsigned int hook_funcion(const struct nf_hook_ops *ops, struct sk_buff *skb, const struct net_device *in, const struct net_device *out, int (*okfn)(struct sk_buff *))
+#endif
 {
 	register struct iphdr *iph;
 
@@ -34,7 +38,11 @@ unsigned int hook_funcion(void *priv, struct sk_buff *skb, const struct nf_hook_
 
 	iph = ip_hdr(skb);
 	
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3, 19, 0)
 	if(skb_ensure_writable(skb, (char*)iph - (char*)skb -> data + 6))
+#else
+	if(!skb_make_writable(skb, (char*)iph - (char*)skb -> data + 6))
+#endif
 	{
 		if(!n_not_writable)
 		{
