@@ -6,8 +6,8 @@
 
 ```bash
 iptables -t mangle -N IPID_MOD
-iptables -t mangle -A FORWARD -j MARK IPID_MOD
-iptables -t mangle -A OUTPUT -j MARK IPID_MOD
+iptables -t mangle -A FORWARD -j IPID_MOD
+iptables -t mangle -A OUTPUT -j IPID_MOD
 iptables -t mangle -A IPID_MOD -d 0.0.0.0/8 -j RETURN
 iptables -t mangle -A IPID_MOD -d 127.0.0.0/8 -j RETURN
 iptables -t mangle -A IPID_MOD -d 10.0.0.0/8 -j RETURN
